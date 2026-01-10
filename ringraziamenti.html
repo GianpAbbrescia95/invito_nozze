@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grazie di cuore</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Cormorant Garamond', serif;
+        color: #3a3a3a;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("images/sfondo.jpg") no-repeat center / cover;
+        filter: blur(8px);
+        transform: scale(1.05);
+        z-index: -1;
+    }
+
+    .box {
+        max-width: 700px;
+        margin: 60px auto;
+        background: rgba(255,255,255,0.93);
+        padding: 60px 35px;
+        text-align: center;
+        border: 1px solid #e0d6cc;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 54px;
+        margin-bottom: 20px;
+    }
+
+    .testo {
+        font-size: 20px;
+        line-height: 1.6;
+        margin-bottom: 35px;
+    }
+
+    .iban {
+        font-size: 18px;
+        letter-spacing: 1px;
+        border-top: 1px solid #b08d57;
+        border-bottom: 1px solid #b08d57;
+        padding: 20px 0;
+        margin: 30px 0;
+    }
+
+    .firma {
+        margin-top: 35px;
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+    h1 {
+        font-size: 42px;
+    }
+.testo {
+        font-size: 18px;
+        }
+    }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1>Grazie di cuore</h1>
+
+    <p class="testo">
+    La vostra presenza sarà per noi il dono più prezioso.  
+    Per chi desiderasse farci un regalo, abbiamo pensato a un contributo
+    per realizzare insieme i nostri sogni futuri.
+    </p>
+
+<div class="iban">
+    <strong>IBAN</strong><br><br>
+    IT00 X000 0000 0000 0000 000000<br>
+    <small>Intestato a Angela & Michele</small>
+</div>
+
+    <p class="firma">
+        Con affetto,<br>
+        Angela & Michele 🤍
+    </p>
+</div>
+
+</body>
+</html>

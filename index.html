@@ -411,8 +411,12 @@ function inviaForm() {
     allergie: allergie
   });
 
-  chiusuraConMessaggio("Grazie! Abbiamo registrato le tue informazioni 😊");
+  // Reindirizza alla pagina di ringraziamento
+  setTimeout(() => {
+    window.location.href = "ringraziamenti.html";
+  }, 500);
 }
+
 
 
 // Popup di ringraziamento
