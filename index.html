@@ -105,7 +105,7 @@ body::before {
 }
 
 
-.form-allergie {
+/* .form-allergie {
   display: none;
   margin-top: 25px;
 }
@@ -128,11 +128,11 @@ body::before {
   color: white;
   font-size: 16px;
   cursor: pointer;
-}
+} */
 
 
 /* popup elegante */
-.popup {
+/* .popup {
   opacity: 0;
   pointer-events: none;
   position: fixed;
@@ -152,10 +152,10 @@ body::before {
 }
 
 /* stato visibile */
-.popup.attivo {
+/* .popup.attivo {
   opacity: 1;
   pointer-events: auto;
-}
+} */ 
 
 /* effetto chiusura pagina */
 body.chiusura {
@@ -334,7 +334,7 @@ body.chiusura {
   </div>
 
   <!-- Form allergie -->
-  <div class="form-allergie" id="formAllergie">
+  <!-- <div class="form-allergie" id="formAllergie">
     <p id="numeroMostrato" style="font-weight:bold; display:none;"></p>
     <p>Hai allergie o intolleranze alimentari?</p>
     <textarea placeholder="Scrivilo qui..."></textarea><br>
@@ -345,7 +345,7 @@ body.chiusura {
 
 <div class="popup" id="popupMessaggio">
   <p id="testoPopup"></p>
-</div>
+</div> -->
 
 
 
@@ -372,21 +372,34 @@ function mostraForm() {
 // Conferma il numero di invitati
 function confermaNumero() {
   const numero = document.getElementById("numeroInvitati").value;
+
   if (numero === "" || numero < 1) {
     alert("Inserisci un numero valido");
     return;
   }
 
-  numeroInvitatiSalvato = numero;
+  inviaDati({
+    risposta: "SI",
+    numero_invitati: numero
+  });
 
-  document.getElementById("formNumero").style.display = "none";
-
-  const numeroMostrato = document.getElementById("numeroMostrato");
-  numeroMostrato.innerText = `Numero invitati: ${numero}`;
-  numeroMostrato.style.display = "block";
-
-  document.getElementById("formAllergie").style.display = "block";
+  // Reindirizzamento alla pagina di ringraziamento
+  setTimeout(() => {
+    window.location.href = "grazie.html";
+  }, 500);
 }
+
+
+//   numeroInvitatiSalvato = numero;
+
+//   document.getElementById("formNumero").style.display = "none";
+
+//   const numeroMostrato = document.getElementById("numeroMostrato");
+//   numeroMostrato.innerText = `Numero invitati: ${numero}`;
+//   numeroMostrato.style.display = "block";
+
+//   document.getElementById("formAllergie").style.display = "block";
+// }
 
 
 // Risposta NO
