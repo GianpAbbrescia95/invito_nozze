@@ -407,7 +407,7 @@ function rispostaNo() {
   inviaDati({
     risposta: "NO",
     numero_invitati: 0,
-    allergie: ""
+    // allergie: ""
   });
 
   chiusuraConMessaggio("Grazie per averci avvisato ❤️");
@@ -415,20 +415,20 @@ function rispostaNo() {
 
 
 // Invia le intolleranze
-function inviaForm() {
-  const allergie = document.querySelector(".form-allergie textarea").value;
+// function inviaForm() {
+//   const allergie = document.querySelector(".form-allergie textarea").value;
 
-  inviaDati({
-    risposta: "SI",
-    numero_invitati: numeroInvitatiSalvato,
-    allergie: allergie
-  });
+//   inviaDati({
+//     risposta: "SI",
+//     numero_invitati: numeroInvitatiSalvato,
+//     allergie: allergie
+//   });
 
   // Reindirizza alla pagina di ringraziamento
   setTimeout(() => {
     window.location.href = "ringraziamenti.html";
   }, 500);
-}
+
 
 
 
