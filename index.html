@@ -356,8 +356,12 @@ body.chiusura {
 
 
 <script>
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgcc8Bam0yTDsMEey-GzPP0S61w9DFqxTPg-_ZGIRZkO7ujXb0QK2fzRWGGouxOsBP/exec";
+  let numeroInvitatiSalvato = 0;
+
 // Mostra il form numero invitati
 function mostraForm() {
+  console.log("CLICK SU SI");
   document.getElementById("btnSi").style.display = "none";
   document.getElementById("btnNo").style.display = "none";
   document.getElementById("domandaRsvp").style.display = "none";
@@ -372,27 +376,43 @@ function confermaNumero() {
     return;
   }
 
-  // Nascondi il form numero
+  numeroInvitatiSalvato = numero;
+
   document.getElementById("formNumero").style.display = "none";
 
-  // Mostra il numero sopra il form allergie
   const numeroMostrato = document.getElementById("numeroMostrato");
   numeroMostrato.innerText = `Numero invitati: ${numero}`;
   numeroMostrato.style.display = "block";
 
-  // Mostra il form allergie
   document.getElementById("formAllergie").style.display = "block";
 }
 
+
 // Risposta NO
 function rispostaNo() {
+  inviaDati({
+    risposta: "NO",
+    numero_invitati: 0,
+    allergie: ""
+  });
+
   chiusuraConMessaggio("Grazie per averci avvisato ❤️");
 }
 
+
 // Invia le intolleranze
 function inviaForm() {
+  const allergie = document.querySelector(".form-allergie textarea").value;
+
+  inviaDati({
+    risposta: "SI",
+    numero_invitati: numeroInvitatiSalvato,
+    allergie: allergie
+  });
+
   chiusuraConMessaggio("Grazie! Abbiamo registrato le tue informazioni 😊");
 }
+
 
 // Popup di ringraziamento
 function chiusuraConMessaggio(messaggio) {
@@ -410,6 +430,26 @@ function chiusuraConMessaggio(messaggio) {
     window.close();
   }, 2000);
 }
+
+
+function inviaDati(dati) {
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify(dati),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Risposta server:", data);
+  })
+  .catch(error => {
+    console.error("Errore invio dati:", error);
+  });
+}
+
+
 
 </script>
 
