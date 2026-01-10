@@ -322,15 +322,14 @@ body::before {
 
 <div class="rsvp">
   <p id="domandaRsvp">Ci sarai?</p>
-  <button id="btnSi" onclick="mostraForm()">Sì</button>
-  <button id="btnNo" onclick="rispostaNo()">No</button>
-
+  <button type="button" id="btnSi" onclick="mostraForm()">Sì</button>
+  <button type="button" id="btnNo" onclick="rispostaNo()">No</button>
   <!-- Form numero invitati -->
   <div class="form-numero" id="formNumero">
     <p>In quanti sarete?</p>
     <input type="number" id="numeroInvitati" min="1" placeholder=". . .">
     <br>
-    <button onclick="confermaNumero()">Continua</button>
+  <button type="button" onclick="confermaNumero()">Continua</button>
   </div>
 
   <!-- Form allergie -->
@@ -356,24 +355,21 @@ body::before {
 
 
 <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCjHDHw20uaZODt5H5ZUp418ea2NYMrPi12GdZXC0RfXHL7Bv38kqo1HwXVBWNBR0s/exec";
-  let numeroInvitatiSalvato = 0;
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwCjHDHw20uaZODt5H5ZUp418ea2NYMrPi12GdZXC0RfXHL7Bv38kqo1HwXVBWNBR0s/exec";
 
-// Mostra il form numero invitati
+// CLICK SU "SÌ"
 function mostraForm() {
-  console.log("CLICK SU SI");
   document.getElementById("btnSi").style.display = "none";
   document.getElementById("btnNo").style.display = "none";
   document.getElementById("domandaRsvp").style.display = "none";
   document.getElementById("formNumero").style.display = "block";
 }
 
-
-// Conferma il numero di invitati
+// CONFERMA NUMERO INVITATI
 function confermaNumero() {
   const numero = document.getElementById("numeroInvitati").value;
 
-  if (numero === "" || numero < 1) {
+  if (!numero || numero < 1) {
     alert("Inserisci un numero valido");
     return;
   }
@@ -383,72 +379,23 @@ function confermaNumero() {
     numero_invitati: numero
   });
 
-  // Reindirizzamento alla pagina di ringraziamento
+  // redirect SOLO dopo il click
   setTimeout(() => {
     window.location.href = "ringraziamenti.html";
-  }, 500);
+  }, 400);
 }
 
-
-//   numeroInvitatiSalvato = numero;
-
-//   document.getElementById("formNumero").style.display = "none";
-
-//   const numeroMostrato = document.getElementById("numeroMostrato");
-//   numeroMostrato.innerText = `Numero invitati: ${numero}`;
-//   numeroMostrato.style.display = "block";
-
-//   document.getElementById("formAllergie").style.display = "block";
-// }
-
-
-// Risposta NO
+// CLICK SU "NO"
 function rispostaNo() {
   inviaDati({
     risposta: "NO",
-    numero_invitati: 0,
-    // allergie: ""
+    numero_invitati: 0
   });
 
-  chiusuraConMessaggio("Grazie per averci avvisato ❤️");
+  alert("Grazie per averci avvisato 🤍");
 }
 
-
-// Invia le intolleranze
-// function inviaForm() {
-//   const allergie = document.querySelector(".form-allergie textarea").value;
-
-//   inviaDati({
-//     risposta: "SI",
-//     numero_invitati: numeroInvitatiSalvato,
-//     allergie: allergie
-//   });
-
-  // Reindirizza alla pagina di ringraziamento
-  setTimeout(() => {
-    window.location.href = "ringraziamenti.html";
-  }, 500);
-
-
-
-
-// Popup di ringraziamento
-function chiusuraConMessaggio(messaggio) {
-  const popup = document.getElementById("popupMessaggio");
-  const testo = document.getElementById("testoPopup");
-  testo.innerText = messaggio;
-  popup.classList.add("attivo");
-
-  setTimeout(function () {
-    popup.classList.remove("attivo");
-    document.body.classList.add("chiusura");
-  }, 1200);
-
-  setTimeout(function () {
-    window.close();
-  }, 2000);
-}
-
+// INVIO DATI A GOOGLE
 function inviaDati(dati) {
   fetch(SCRIPT_URL, {
     method: "POST",
@@ -458,13 +405,9 @@ function inviaDati(dati) {
       "Content-Type": "application/json"
     }
   });
-
-  console.log("DATI INVIATI A GOOGLE");
 }
-
-
-
 </script>
+
 
 </body>
 </html>
