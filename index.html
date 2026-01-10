@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invito a Nozze</title>
+
+  <!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Cormorant Garamond', serif;
+  color: #3a3a3a;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("images/sfondo.jpg") no-repeat center center / cover;
+  filter: blur(8px);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+
+.invito {
+  max-width: 700px;
+  margin: 40px auto;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 50px 30px;
+  text-align: center;
+  border: 1px solid #e0d6cc;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+
+
+    h1 {
+      font-family: 'Cormorand Garamond', serif;
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .cuore {
+      font-size: 30px;
+      margin: 20px 0;
+      color: #b08d57;
+    }
+
+    h2 {
+      font-family: 'Cormorand Garamond', serif;
+      font-weight: 400;
+      margin: 30px 0 10px;
+    }
+
+    .data {
+      font-size: 20px;
+      letter-spacing: 2px;
+      margin: 20px 0;
+    }
+
+    .luogo {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #777;
+    }
+    .rsvp {
+  margin-top: 30px;
+}
+
+.rsvp p {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.rsvp button {
+  font-family: 'Cormorand Garamond', sans-serif;
+  font-size: 16px;
+  padding: 12px 24px;
+  margin: 0 10px;
+  border: 1px solid #b08d57;
+  background: white;
+  color: #b08d57;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rsvp button:hover {
+  background: #b08d57;
+  color: white;
+}
+
+
+.form-allergie {
+  display: none;
+  margin-top: 25px;
+}
+
+.form-allergie textarea {
+  width: 100%;
+  max-width: 400px;
+  height: 80px;
+  padding: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  border: 1px solid #b08d57;
+}
+
+.form-allergie button {
+  margin-top: 15px;
+  padding: 10px 22px;
+  border: none;
+  background: #b08d57;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+/* popup elegante */
+.popup {
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.95);
+  padding: 30px 40px;
+  border: 1px solid #b08d57;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  color: #3a3a3a;
+  z-index: 1000;
+  border-radius: 8px;
+  transition: opacity 0.4s ease;
+}
+
+/* stato visibile */
+.popup.attivo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* effetto chiusura pagina */
+body.chiusura {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.nome-luogo {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  color: #2f2f2f;
+}
+
+.maps-button {
+  margin-top: 20px;
+}
+
+.maps-button a {
+  display: inline-block;
+  padding: 12px 36px;
+  border: 1px solid #b08d57;
+  color: #b08d57;
+  text-decoration: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  letter-spacing: 1px;
+  transition: all 0.35s ease;
+}
+
+.maps-button a:hover {
+  background: #b08d57;
+  color: #ffffff;
+  
+}
+
+.form-numero {
+  display: none;
+  margin-top: 25px;
+}
+
+.form-numero input {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  padding: 10px 12px;
+  border: 1px solid #b08d57;
+  width: 120px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+
+
+
+/* =========================
+   RESPONSIVE - TABLET
+   ========================= */
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 38px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .data {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  .invito {
+    padding: 40px 25px;
+    margin: 30px 20px;
+  }
+}
+
+/* =========================
+  RESPONSIVE - MOBILE
+   ========================= */
+@media (max-width: 480px) {
+
+  h1 {
+    font-size: 32px;
+  }
+
+  .cuore {
+    font-size: 26px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .data {
+    font-size: 17px;
+  }
+
+  .luogo {
+    font-size: 16px;
+  }
+
+  .nome-luogo {
+    font-size: 20px;
+  }
+
+  .rsvp button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .form-allergie textarea {
+    width: 100%;
+  }
+
+
+  .popup {
+    width: 85%;
+    padding: 25px 20px;
+  }
+
+  .maps-button a {
+  width: 75%;
+  text-align: center;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <div class="invito">
+    <p>Con grande gioia</p>
+
+    <h1>Angela & Michele</h1>
+
+    <div class="cuore">♡</div>
+
+    <p>annunciano il loro matrimonio</p>
+
+<div class="data">
+      Mercoledì<br>
+      8 Luglio 2026
+</div>
+
+<h2>Ore 16:30</h2>
+
+<div class="luogo">
+  <span class="nome-luogo">Al Sole Resort</span><br>
+  Via Giuseppe Di Vagno, 218<br>
+  Mola di Bari
+</div>
+
+
+
+<div class="maps-button">
+  <a href="https://www.google.com/maps?q=Al+Sole+Resort+Mola+di+Bari" target="_blank">
+    📍 Apri in Google Maps
+  </a>
+</div>
+
+<div class="rsvp">
+  <p id="domandaRsvp">Ci sarai?</p>
+  <button id="btnSi" onclick="mostraForm()">Sì</button>
+  <button id="btnNo" onclick="rispostaNo()">No</button>
+
+  <!-- Form numero invitati -->
+  <div class="form-numero" id="formNumero">
+    <p>In quanti sarete?</p>
+    <input type="number" id="numeroInvitati" min="1" placeholder=". . .">
+    <br>
+    <button onclick="confermaNumero()">Continua</button>
+  </div>
+
+  <!-- Form allergie -->
+  <div class="form-allergie" id="formAllergie">
+    <p id="numeroMostrato" style="font-weight:bold; display:none;"></p>
+    <p>Hai allergie o intolleranze alimentari?</p>
+    <textarea placeholder="Scrivilo qui..."></textarea><br>
+    <button onclick="inviaForm()">Invia</button>
+  </div>
+</div>
+
+
+<div class="popup" id="popupMessaggio">
+  <p id="testoPopup"></p>
+</div>
+
+
+
+<div class="footer">
+      Vi aspettiamo per festeggiare insieme 💍
+    </div>
+</div>
+
+
+<script>
+// Mostra il form numero invitati
+function mostraForm() {
+  document.getElementById("btnSi").style.display = "none";
+  document.getElementById("btnNo").style.display = "none";
+  document.getElementById("domandaRsvp").style.display = "none";
+  document.getElementById("formNumero").style.display = "block";
+}
+
+// Conferma il numero di invitati
+function confermaNumero() {
+  const numero = document.getElementById("numeroInvitati").value;
+  if (numero === "" || numero < 1) {
+    alert("Inserisci un numero valido");
+    return;
+  }
+
+  // Nascondi il form numero
+  document.getElementById("formNumero").style.display = "none";
+
+  // Mostra il numero sopra il form allergie
+  const numeroMostrato = document.getElementById("numeroMostrato");
+  numeroMostrato.innerText = `Numero invitati: ${numero}`;
+  numeroMostrato.style.display = "block";
+
+  // Mostra il form allergie
+  document.getElementById("formAllergie").style.display = "block";
+}
+
+// Risposta NO
+function rispostaNo() {
+  chiusuraConMessaggio("Grazie per averci avvisato ❤️");
+}
+
+// Invia le intolleranze
+function inviaForm() {
+  chiusuraConMessaggio("Grazie! Abbiamo registrato le tue informazioni 😊");
+}
+
+// Popup di ringraziamento
+function chiusuraConMessaggio(messaggio) {
+  const popup = document.getElementById("popupMessaggio");
+  const testo = document.getElementById("testoPopup");
+  testo.innerText = messaggio;
+  popup.classList.add("attivo");
+
+  setTimeout(function () {
+    popup.classList.remove("attivo");
+    document.body.classList.add("chiusura");
+  }, 1200);
+
+  setTimeout(function () {
+    window.close();
+  }, 2000);
+}
+
+</script>
+
+</body>
+</html>
