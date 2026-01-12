@@ -33,16 +33,29 @@ body::before {
 
 
 .invito {
+  position: relative;
   max-width: 700px;
   margin: 40px auto;
-
-  background: url("images/sfondo_senza_logo.png") center / cover no-repeat;
-
   padding: 50px 30px;
   text-align: center;
+
   border: 1px solid #e0d6cc;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  overflow: hidden;
 }
+
+.invito::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: url("images/sfondo_senza_logo.png") center / cover no-repeat;
+  filter: blur(10px);
+  transform: scale(1.12); /* evita bordi */
+
+  z-index: -1;
+}
+
 
 
 
