@@ -151,6 +151,21 @@ body::before {
 }
 
 
+#formNomi {
+  display: none;
+}
+
+#campiNomi input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 70%;
+  border: 1px solid #b08d57;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+}
+
+
 
 
 /* =========================
@@ -287,6 +302,11 @@ body::before {
     <br>
   <button type="button" onclick="confermaNumero()">Continua</button>
   </div>
+  <div class="form-numero" id="formNomi">
+  <p>Inserisci nome e cognome degli invitati</p>
+  <div id="campiNomi"></div>
+  <button type="button" onclick="confermaNumero()">Conferma</button>
+</div>
 </div>
 
 <div class="footer">
@@ -296,7 +316,7 @@ body::before {
 
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKGEJp32xP59vZIEq21iDnE0ukNvUarLAVugE8TxnHO0r_qb_h5baETIT1UK-WRmkb/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBhAgtBZ9kn0LxAGgUYOHbSrlgUn4JANheWk0YH03h4fG667Xfgx5iNmUt9-aFq2Rm/exec";
 
 // CLICK SU "SÌ"
 function mostraForm() {
@@ -308,23 +328,49 @@ function mostraForm() {
 
 // CONFERMA NUMERO INVITATI
 function confermaNumero() {
+  const inputs = document.querySelectorAll(".nome-invitato");
+  let nomi = [];
+
+  inputs.forEach(input => {
+    if (input.value.trim() !== "") {
+      nomi.push(input.value.trim());
+    }
+  });
+
+  inviaDati({
+    risposta: "SI",
+    numero_invitati: nomi.length,
+    nomi_invitati: nomi.join(", ")
+  });
+
+  setTimeout(() => {
+    window.location.href = "ringraziamenti.html";
+  }, 400);
+}
+
+function generaNomi() {
   const numero = document.getElementById("numeroInvitati").value;
+  const container = document.getElementById("campiNomi");
 
   if (!numero || numero < 1) {
     alert("Inserisci un numero valido");
     return;
   }
 
-  inviaDati({
-    risposta: "SI",
-    numero_invitati: numero
-  });
+  container.innerHTML = "";
 
-  // redirect SOLO dopo il click
-  setTimeout(() => {
-    window.location.href = "ringraziamenti.html";
-  }, 400);
+  for (let i = 1; i <= numero; i++) {
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = `Invitato ${i} – Nome e Cognome`;
+    input.className = "nome-invitato";
+    container.appendChild(input);
+  }
+
+  document.getElementById("formNumero").style.display = "none";
+  document.getElementById("formNomi").style.display = "block";
 }
+
 
 // CLICK SU "NO"
 function rispostaNo() {
