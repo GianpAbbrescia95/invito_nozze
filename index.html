@@ -13,7 +13,7 @@
   margin: 0;
   padding: 0;
   font-family: 'Great Vibes', serif;
-  color: #2f2f2f;
+  color: #3a3a3a;
   min-height: 100vh;
   position: relative;
 }
@@ -25,7 +25,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("images/sfondo2.webp") no-repeat center center / cover;
+  background: url("images/sfondo_senza_logo") no-repeat center center / cover;
   filter: blur(8px);
   transform: scale(1.05);
   z-index: -1;
@@ -33,43 +33,15 @@ body::before {
 
 
 .invito {
-  position: relative;
   max-width: 700px;
   margin: 40px auto;
+  background: rgba(255, 255, 255, 0.92);
   padding: 50px 30px;
   text-align: center;
-
   border: 1px solid #e0d6cc;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  overflow: hidden;
 }
 
-.invito::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-
-  background: url("images/sfondo_senza_logo.png") center / cover no-repeat;
-  filter: blur(10px);
-  transform: scale(1.12); /* evita bordi */
-
-  z-index: -1;
-}
-
-
-.testo-luogo {
-  color: #2f2f2f;
-}
-
-.testo-standard {
-  color: #2f2f2f;
-  font-family: 'Cormorant Garamond', serif;
-}
-
-.testo-standard strong {
-  font-family: 'Great Vibes', serif;
-  font-weight: 500;
-}
 
 
     h1 {
@@ -81,7 +53,7 @@ body::before {
     .cuore {
       font-size: 30px;
       margin: 20px 0;
-      color: #F5F1EB;
+      color: #b08d57;
     }
 
     h2 {
@@ -104,7 +76,7 @@ body::before {
     .footer {
       margin-top: 40px;
       font-size: 14px;
-      color: #F5F1EB;
+      color: #777;
     }
     .rsvp {
   margin-top: 30px;
@@ -207,9 +179,8 @@ body::before {
 .maps-button a {
   display: inline-block;
   padding: 12px 36px;
-  background-color: #ffffff;
-  border: 1px solid #C2A46D;
-  color: #C2A46D;
+  border: 1px solid #b08d57;
+  color: #b08d57;
   text-decoration: none;
   font-family: 'Great Vibes', serif;
   font-size: 18px;
@@ -218,7 +189,7 @@ body::before {
 }
 
 .maps-button a:hover {
-  background: #C2A46D;
+  background: #b08d57;
   color: #ffffff;
   
 }
@@ -232,7 +203,7 @@ body::before {
   font-family: 'Great Vibes', serif;
   font-size: 16px;
   padding: 10px 12px;
-  border: 1px solid #C2A46D;
+  border: 1px solid #b08d57;
   width: 120px;
   text-align: center;
   margin-bottom: 15px;
@@ -338,13 +309,13 @@ body::before {
 <h2>Ore 21:00</h2>
 <h2>Taglio della torta</h2>
 
-<div class="luogo testo-standard">
+<div class="luogo">
   <span class="nome-luogo">"Al Sole Resort"</span><br>
   Via Giuseppe Di Vagno, 218<br>
   Mola di Bari
 </div>
 
-<div style="margin-top: 25px;" class="testo-standard">
+<div style="margin-top: 25px;">
   <p>
     Sarà un piacere condividere questo momento insieme.
   </p>
