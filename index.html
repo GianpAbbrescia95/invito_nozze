@@ -6,43 +6,207 @@
   <title>Invito a Nozze</title>
 
   <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Great Vibes', serif;
-  color: #3a3a3a;
-  min-height: 100vh;
-  position: relative;
-}
+      font-family: 'Great Vibes', serif;
+      color: #3a3a3a;
+      min-height: 100vh;
+      position: relative;
+    }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("images/sfondo_senza_logo.png") no-repeat center center / cover;
-  filter: blur(8px);
-  transform: scale(1.05);
-  z-index: -1;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("images/sfondo_senza_logo.png") no-repeat center center / cover;
+      filter: blur(8px);
+      transform: scale(1.05);
+      z-index: -1;
+    }
 
+    /* ================================
+       ANIMAZIONE BUSTA
+       ================================ */
+    .envelope-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease 2.5s, visibility 0s 3s;
+    }
 
-.invito {
-  max-width: 700px;
-  margin: 40px auto;
-  background: rgba(255, 255, 255, 0.92);
-  padding: 50px 30px;
-  text-align: center;
-  border: 1px solid #e0d6cc;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
+    .envelope-container.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
 
+    .envelope {
+      position: relative;
+      width: 400px;
+      height: 280px;
+      cursor: pointer;
+      transition: transform 0.6s ease;
+    }
 
+    .envelope:hover:not(.opened) {
+      transform: translateY(-10px);
+    }
+
+    .envelope.opened {
+      cursor: default;
+    }
+
+    /* Corpo della busta */
+    .envelope-body {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #f9f4ef;
+      border: 2px solid #d4a574;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      z-index: 1;
+      transition: opacity 0.5s ease 1.5s;
+    }
+
+    .envelope.opened .envelope-body {
+      opacity: 0;
+    }
+
+    /* Lembo della busta */
+    .envelope-flap {
+      position: absolute;
+      width: 100%;
+      height: 140px;
+      background: #f9f4ef;
+      border: 2px solid #d4a574;
+      border-bottom: none;
+      top: 0;
+      left: 0;
+      transform-origin: top center;
+      transition: transform 0.8s ease 0.3s, opacity 0.5s ease 1.5s;
+      z-index: 3;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    .envelope.opened .envelope-flap {
+      transform: rotateX(-180deg);
+      opacity: 0;
+    }
+
+    /* Sigillo/Logo */
+    .wax-seal {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #c9a961 0%, #d4af6a 50%, #c9a961 100%);
+      border-radius: 50%;
+      top: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      box-shadow: 
+        0 5px 15px rgba(0,0,0,0.3),
+        inset 0 -5px 10px rgba(0,0,0,0.2),
+        inset 0 5px 10px rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .wax-seal::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent);
+    }
+
+    /* Logo - SOSTITUISCI CON IL TUO */
+    .seal-logo {
+      font-size: 32px;
+      color: #8b6f47;
+      font-weight: bold;
+      font-family: 'Great Vibes', cursive;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .envelope.opened .wax-seal {
+      opacity: 0;
+      transform: translateX(-50%) scale(0.5) rotate(45deg);
+    }
+
+    /* Istruzioni */
+    .instructions {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #8b6f47;
+      text-align: center;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      font-family: 'Cormorant Garamond', serif;
+      white-space: nowrap;
+    }
+
+    .envelope.opened + .instructions {
+      opacity: 0;
+    }
+
+    .instructions::before {
+      content: '👆';
+      display: block;
+      font-size: 24px;
+      margin-bottom: 5px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ================================
+       INVITO (dal tuo codice originale)
+       ================================ */
+    .invito {
+      max-width: 700px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 50px 30px;
+      text-align: center;
+      border: 1px solid #e0d6cc;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s ease 0.8s, transform 1s ease 0.8s;
+    }
+
+    .invito.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
 
     h1 {
       font-family: 'Great Vibes', serif;
@@ -78,184 +242,234 @@ body::before {
       font-size: 14px;
       color: #777;
     }
+
     .rsvp {
-  margin-top: 30px;
-}
+      margin-top: 30px;
+    }
 
-.rsvp p {
-  font-size: 18px;
-  margin-bottom: 15px;
-}
+    .rsvp p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
 
-.rsvp button {
-  font-family: 'Great Vibes', sans-serif;
-  font-size: 16px;
-  padding: 12px 24px;
-  margin: 0 10px;
-  border: 1px solid #b08d57;
-  background: white;
-  color: #b08d57;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+    .rsvp button {
+      font-family: 'Great Vibes', sans-serif;
+      font-size: 16px;
+      padding: 12px 24px;
+      margin: 0 10px;
+      border: 1px solid #b08d57;
+      background: white;
+      color: #b08d57;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.rsvp button:hover {
-  background: #b08d57;
-  color: white;
-}
+    .rsvp button:hover {
+      background: #b08d57;
+      color: white;
+    }
 
-.nome-luogo {
-  display: block;
-  font-size: 22px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  margin-bottom: 6px;
-  color: #2f2f2f;
-}
+    .nome-luogo {
+      display: block;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+      color: #2f2f2f;
+    }
 
-.maps-button {
-  margin-top: 20px;
-}
+    .maps-button {
+      margin-top: 20px;
+    }
 
-.maps-button a {
-  display: inline-block;
-  padding: 12px 36px;
-  border: 1px solid #b08d57;
-  color: #b08d57;
-  text-decoration: none;
-  font-family: 'Great Vibes', serif;
-  font-size: 18px;
-  letter-spacing: 1px;
-  transition: all 0.35s ease;
-}
+    .maps-button a {
+      display: inline-block;
+      padding: 12px 36px;
+      border: 1px solid #b08d57;
+      color: #b08d57;
+      text-decoration: none;
+      font-family: 'Great Vibes', serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+      transition: all 0.35s ease;
+    }
 
-.maps-button a:hover {
-  background: #b08d57;
-  color: #ffffff;
-  
-}
+    .maps-button a:hover {
+      background: #b08d57;
+      color: #ffffff;
+    }
 
-.form-numero {
-  display: none;
-  margin-top: 25px;
-}
+    .form-numero {
+      display: none;
+      margin-top: 25px;
+    }
 
-.form-numero input {
-  font-family: 'Great Vibes', serif;
-  font-size: 16px;
-  padding: 10px 12px;
-  border: 1px solid #b08d57;
-  width: 120px;
-  text-align: center;
-  margin-bottom: 15px;
-}
+    .form-numero input {
+      font-family: 'Great Vibes', serif;
+      font-size: 16px;
+      padding: 10px 12px;
+      border: 1px solid #b08d57;
+      width: 120px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
 
+    #formNomi {
+      display: none;
+    }
 
-#formNomi {
-  display: none;
-}
+    #campiNomi input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 70%;
+      border: 1px solid #b08d57;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+    }
 
-#campiNomi input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 70%;
-  border: 1px solid #b08d57;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
-}
+    .privacy {
+      margin-top: 25px;
+      font-size: 12px;
+      color: #8a8a8a;
+      line-height: 1.5;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-.privacy {
-  margin-top: 25px;
-  font-size: 12px;
-  color: #8a8a8a;
-  line-height: 1.5;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-}
+    /* =========================
+       RESPONSIVE - TABLET
+       ========================= */
+    @media (max-width: 768px) {
+      .envelope {
+        width: 320px;
+        height: 224px;
+      }
 
+      .envelope-flap {
+        height: 112px;
+      }
 
+      .wax-seal {
+        width: 60px;
+        height: 60px;
+        top: 72px;
+      }
 
-/* =========================
-  RESPONSIVE - TABLET
-   ========================= */
-@media (max-width: 768px) {
+      .seal-logo {
+        font-size: 24px;
+      }
 
-  h1 {
-    font-size: 38px;
-  }
+      h1 {
+        font-size: 38px;
+      }
 
-  h2 {
-    font-size: 22px;
-  }
+      h2 {
+        font-size: 22px;
+      }
 
-  .data {
-    font-size: 18px;
-    letter-spacing: 1px;
-  }
+      .data {
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
 
-  .invito {
-    padding: 40px 25px;
-    margin: 30px 20px;
-  }
-}
+      .invito {
+        padding: 40px 25px;
+        margin: 30px 20px;
+      }
+    }
 
-/* =========================
-  RESPONSIVE - MOBILE
-   ========================= */
-@media (max-width: 480px) {
+    /* =========================
+       RESPONSIVE - MOBILE
+       ========================= */
+    @media (max-width: 480px) {
+      .envelope {
+        width: 280px;
+        height: 196px;
+      }
 
-  h1 {
-    font-size: 32px;
-  }
+      .envelope-flap {
+        height: 98px;
+      }
 
-  .cuore {
-    font-size: 26px;
-  }
+      .wax-seal {
+        width: 50px;
+        height: 50px;
+        top: 63px;
+      }
 
-  h2 {
-    font-size: 20px;
-  }
+      .seal-logo {
+        font-size: 20px;
+      }
 
-  .data {
-    font-size: 17px;
-  }
+      h1 {
+        font-size: 32px;
+      }
 
-  .luogo {
-    font-size: 16px;
-  }
+      .cuore {
+        font-size: 26px;
+      }
 
-  .nome-luogo {
-    font-size: 20px;
-  }
+      h2 {
+        font-size: 20px;
+      }
 
-  .rsvp button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-  }
+      .data {
+        font-size: 17px;
+      }
 
-  .form-allergie textarea {
-    width: 100%;
-  }
+      .luogo {
+        font-size: 16px;
+      }
 
+      .nome-luogo {
+        font-size: 20px;
+      }
 
-  .popup {
-    width: 85%;
-    padding: 25px 20px;
-  }
+      .rsvp button {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+      }
 
-  .maps-button a {
-  width: 75%;
-  text-align: center;
-  }
-}
+      .form-allergie textarea {
+        width: 100%;
+      }
+
+      .popup {
+        width: 85%;
+        padding: 25px 20px;
+      }
+
+      .maps-button a {
+        width: 75%;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 
 <body>
-  <div class="invito">
+  <!-- ANIMAZIONE BUSTA -->
+  <div class="envelope-container" id="envelopeContainer">
+    <div style="position: relative;">
+      <div class="envelope" id="envelope">
+        <div class="envelope-body"></div>
+        <div class="envelope-flap"></div>
+        <div class="wax-seal">
+          <!-- SOSTITUISCI CON: <img src="images/tuo-logo.png" style="width: 50px; height: 50px; border-radius: 50%;"> -->
+          <div class="seal-logo">M&A</div>
+        </div>
+      </div>
+      <div class="instructions">
+        Clicca sul sigillo per aprire
+      </div>
+    </div>
+  </div>
+
+  <!-- INVITO (il tuo codice originale) -->
+  <div class="invito" id="invito">
     <p>Con grande gioia</p>
 
     <h1>Michele & Angela</h1>
@@ -266,152 +480,176 @@ body::before {
         il momento più dolce e simbolico
         del loro grande giorno:</p>
 
-<div class="data">
+    <div class="data">
       Mercoledì<br>
       8 Luglio 2026
-</div>
+    </div>
 
-<h2>Ore 21:00</h2>
-<h2>Taglio della torta</h2>
+    <h2>Ore 21:00</h2>
+    <h2>Taglio della torta</h2>
 
-<div class="luogo">
-  <span class="nome-luogo">"Al Sole Resort"</span><br>
-  Via Giuseppe Di Vagno, 218<br>
-  Mola di Bari
-</div>
+    <div class="luogo">
+      <span class="nome-luogo">"Al Sole Resort"</span><br>
+      Via Giuseppe Di Vagno, 218<br>
+      Mola di Bari
+    </div>
 
-<div style="margin-top: 25px;">
-  <p>
-    Sarà un piacere condividere questo momento insieme.
-  </p>
+    <div class="maps-button">
+      <a href="https://www.google.com/maps?q=Al+Sole+Resort+Mola+di+Bari" target="_blank">
+        📍 Apri in Google Maps
+      </a>
+    </div>
 
-  <p style="margin-top: 18px; font-size: 16px; letter-spacing: 1px;">
-    Vi chiediamo gentilmente di confermare la vostra presenza<br>
-    <strong>entro il 1° luglio 2026</strong>
-  </p>
-</div>
+    <div style="margin-top: 25px;">
+      <p>
+        Sarà un piacere condividere questo momento insieme.
+      </p>
 
+      <p style="margin-top: 18px; font-size: 16px; letter-spacing: 1px;">
+        Vi chiediamo gentilmente di confermare la vostra presenza<br>
+        <strong>entro il 1° luglio 2026</strong>
+      </p>
+    </div>
 
+    <div class="rsvp">
+      <p id="domandaRsvp">Ci sarai?</p>
+      <button type="button" id="btnSi" onclick="mostraForm()">Sì</button>
+      <button type="button" id="btnNo" onclick="rispostaNo()">No</button>
+      
+      <!-- Form numero invitati -->
+      <div class="form-numero" id="formNumero">
+        <p>In quanti sarete?</p>
+        <input type="number" id="numeroInvitati" min="1" placeholder=". . .">
+        <br>
+        <button type="button" onclick="generaNomi()">Continua</button>
+      </div>
+      
+      <div class="form-numero" id="formNomi">
+        <p>Inserisci nome e cognome degli invitati</p>
+        <div id="campiNomi"></div>
+        <button type="button" onclick="confermaNumero()">Conferma</button>
+      </div>
+    </div>
 
+    <p class="privacy">
+      I dati personali forniti saranno utilizzati esclusivamente
+      per l'organizzazione dell'evento e non verranno condivisi con terzi.
+    </p>
 
-<div class="maps-button">
-  <a href="https://www.google.com/maps?q=Al+Sole+Resort+Mola+di+Bari" target="_blank">
-    📍 Apri in Google Maps
-  </a>
-</div>
-
-<div class="rsvp">
-  <p id="domandaRsvp">Ci sarai?</p>
-  <button type="button" id="btnSi" onclick="mostraForm()">Sì</button>
-  <button type="button" id="btnNo" onclick="rispostaNo()">No</button>
-  <!-- Form numero invitati -->
-  <div class="form-numero" id="formNumero">
-    <p>In quanti sarete?</p>
-    <input type="number" id="numeroInvitati" min="1" placeholder=". . .">
-    <br>
-  <button type="button" onclick="generaNomi()">Continua</button>
-  </div>
-  <div class="form-numero" id="formNomi">
-  <p>Inserisci nome e cognome degli invitati</p>
-  <div id="campiNomi"></div>
-  <button type="button" onclick="confermaNumero()">Conferma</button>
-</div>
-</div>
-
-<p class="privacy">
-I dati personali forniti saranno utilizzati esclusivamente
-per l’organizzazione dell’evento e non verranno condivisi con terzi.
-</p>
-
-
-
-<div class="footer">
+    <div class="footer">
       Vi aspettiamo per festeggiare insieme 💍
     </div>
-</div>
+  </div>
 
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwq28pmeiuKVvxgTHBp5fJGViyKAhCAJKCWT7xfPRgPvEykytvebkAFlW43OPIzFSMd/exec";
 
-<script>
-  //ciao a tutti
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwq28pmeiuKVvxgTHBp5fJGViyKAhCAJKCWT7xfPRgPvEykytvebkAFlW43OPIzFSMd/exec";
+    // ================================
+    // ANIMAZIONE APERTURA BUSTA
+    // ================================
+    const envelope = document.getElementById('envelope');
+    const envelopeContainer = document.getElementById('envelopeContainer');
+    const invito = document.getElementById('invito');
 
-// CLICK SU "SÌ"
-function mostraForm() {
-  document.getElementById("btnSi").style.display = "none";
-  document.getElementById("btnNo").style.display = "none";
-  document.getElementById("domandaRsvp").style.display = "none";
-  document.getElementById("formNumero").style.display = "block";
-}
+    envelope.addEventListener('click', function() {
+      if (!this.classList.contains('opened')) {
+        this.classList.add('opened');
+        
+        // L'invito diventa visibile
+        invito.classList.add('visible');
+        
+        // Dopo 3 secondi nascondi la busta
+        setTimeout(() => {
+          envelopeContainer.classList.add('hidden');
+          
+          // Scroll all'inizio
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }, 3000);
+      }
+    });
 
-// CONFERMA NUMERO INVITATI
-function confermaNumero() {
-  const inputs = document.querySelectorAll(".nome-invitato");
-  let nomi = [];
-
-  inputs.forEach(input => {
-    if (input.value.trim() !== "") {
-      nomi.push(input.value.trim());
+    // ================================
+    // FUNZIONI RSVP (il tuo codice originale)
+    // ================================
+    
+    // CLICK SU "SÌ"
+    function mostraForm() {
+      document.getElementById("btnSi").style.display = "none";
+      document.getElementById("btnNo").style.display = "none";
+      document.getElementById("domandaRsvp").style.display = "none";
+      document.getElementById("formNumero").style.display = "block";
     }
-  });
 
-  inviaDati({
-    risposta: "SI",
-    numero_invitati: nomi.length,
-    nomi_invitati: nomi.join(", ")
-  });
+    // GENERA CAMPI NOMI
+    function generaNomi() {
+      const numero = document.getElementById("numeroInvitati").value;
+      const container = document.getElementById("campiNomi");
 
-  setTimeout(() => {
-    window.location.href = "ringraziamenti.html";
-  }, 400);
-}
+      if (!numero || numero < 1) {
+        alert("Inserisci un numero valido");
+        return;
+      }
 
-function generaNomi() {
-  const numero = document.getElementById("numeroInvitati").value;
-  const container = document.getElementById("campiNomi");
+      container.innerHTML = "";
 
-  if (!numero || numero < 1) {
-    alert("Inserisci un numero valido");
-    return;
-  }
+      for (let i = 1; i <= numero; i++) {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = `Invitato ${i} – Nome e Cognome`;
+        input.className = "nome-invitato";
+        container.appendChild(input);
+      }
 
-  container.innerHTML = "";
-
-  for (let i = 1; i <= numero; i++) {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.placeholder = `Invitato ${i} – Nome e Cognome`;
-    input.className = "nome-invitato";
-    container.appendChild(input);
-  }
-
-  document.getElementById("formNumero").style.display = "none";
-  document.getElementById("formNomi").style.display = "block";
-}
-
-
-// CLICK SU "NO"
-function rispostaNo() {
-  inviaDati({
-    risposta: "NO",
-    numero_invitati: 0
-  });
-
-  alert("Grazie per averci avvisato 🤍");
-}
-
-// INVIO DATI A GOOGLE
-function inviaDati(dati) {
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    body: JSON.stringify(dati),
-    headers: {
-      "Content-Type": "application/json"
+      document.getElementById("formNumero").style.display = "none";
+      document.getElementById("formNomi").style.display = "block";
     }
-  });
-}
-</script>
 
+    // CONFERMA NUMERO INVITATI
+    function confermaNumero() {
+      const inputs = document.querySelectorAll(".nome-invitato");
+      let nomi = [];
 
+      inputs.forEach(input => {
+        if (input.value.trim() !== "") {
+          nomi.push(input.value.trim());
+        }
+      });
+
+      inviaDati({
+        risposta: "SI",
+        numero_invitati: nomi.length,
+        nomi_invitati: nomi.join(", ")
+      });
+
+      setTimeout(() => {
+        window.location.href = "ringraziamenti.html";
+      }, 400);
+    }
+
+    // CLICK SU "NO"
+    function rispostaNo() {
+      inviaDati({
+        risposta: "NO",
+        numero_invitati: 0
+      });
+
+      alert("Grazie per averci avvisato 🤍");
+    }
+
+    // INVIO DATI A GOOGLE
+    function inviaDati(dati) {
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(dati),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+    }
+  </script>
 </body>
 </html>
