@@ -36,9 +36,10 @@
     }
 
     /* ================================
-    ANIMAZIONE BUSTA
-       ================================ */
+    ANIMAZIONE BUSTA (PARTE CORRETTA)
+    ================================ */
     .envelope-container {
+      perspective: 1200px;
       position: fixed;
       top: 0;
       left: 0;
@@ -72,27 +73,62 @@
       cursor: default;
     }
 
-    /* Corpo della busta */
+    /* Corpo della busta - MODIFICATO PER AGGIUNGERE LE LINEE */
     .envelope-body {
       position: absolute;
       width: 100%;
       height: 100%;
-      background: #f9f4ef;
+      background: #fdfaf7; /* Fondo interno della busta */
       border: 2px solid #d4a574;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
       z-index: 1;
       transition: opacity 0.5s ease 1.5s;
+      /* Non mettiamo overflow:hidden perché la lettera deve uscire sopra */
     }
+
+    /* Lembo sinistro */
+    .envelope-body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #fcf8f3; 
+      clip-path: polygon(0 0, 50% 50%, 0 100%);
+      z-index: 3; /* Copre il foglio */
+      border-right: 1px solid #d4a574;
+      filter: drop-shadow(2px 0 2px rgba(0,0,0,0.05));
+    }
+
+    /* Lembo destro */
+    .envelope-body::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #fcf8f3; 
+      clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+      z-index: 3; /* Copre il foglio */
+      border-left: 1px solid #d4a574;
+      filter: drop-shadow(-2px 0 2px rgba(0,0,0,0.05));
+    }
+
+.envelope-bottom-triangle {
+      position: absolute;
+      bottom: 0; left: 0; width: 100%; height: 100%;
+      background: #f9f4ef;
+      clip-path: polygon(0 100%, 100% 100%, 50% 50%);
+      z-index: 4; /* Sopra tutto tranne il flap superiore e il sigillo */
+      border-top: 1px solid #e5c39e;
+    }
+
 
     .envelope.opened .envelope-body {
       opacity: 0;
     }
 
-    /* Lembo della busta */
+    /* Lembo della busta (Quello superiore) */
     .envelope-flap {
       position: absolute;
       width: 100%;
-      height: 140px;
+      height: 140px; /* Esattamente metà altezza */
       background: #f9f4ef;
       border: 2px solid #d4a574;
       border-bottom: none;
@@ -117,7 +153,7 @@
       height: 80px;
       background: linear-gradient(135deg, #c9a961 0%, #d4af6a 50%, #c9a961 100%);
       border-radius: 50%;
-      top: 90px;
+      top: 100px; /* Abbassato leggermente per stare sulla punta del flap */
       left: 50%;
       transform: translateX(-50%);
       z-index: 4;
@@ -140,7 +176,6 @@
       background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent);
     }
 
-    /* Logo - SOSTITUISCI CON IL TUO */
     .seal-logo {
       font-size: 32px;
       color: #8b6f47;
@@ -187,9 +222,9 @@
       50% { transform: translateY(-10px); }
     }
 
-    /* ================================
-       INVITO (dal tuo codice originale)
-       ================================ */
+    /* ============================================================
+       STILE INVITO (INVARIATO)
+       ============================================================ */
     .invito {
       max-width: 700px;
       margin: 40px auto;
@@ -212,6 +247,7 @@
       font-family: 'Allura', serif;
       font-size: 48px;
       margin-bottom: 10px;
+      color: #87CEEB;
     }
 
     .cuore {
@@ -339,115 +375,34 @@
     }
 
     /* =========================
-       RESPONSIVE - TABLET
+       RESPONSIVE (INVARIATO)
        ========================= */
     @media (max-width: 768px) {
-      .envelope {
-        width: 320px;
-        height: 224px;
-      }
-
-      .envelope-flap {
-        height: 112px;
-      }
-
-      .wax-seal {
-        width: 60px;
-        height: 60px;
-        top: 72px;
-      }
-
-      .seal-logo {
-        font-size: 24px;
-      }
-
-      h1 {
-        font-size: 38px;
-      }
-
-      h2 {
-        font-size: 22px;
-      }
-
-      .data {
-        font-size: 18px;
-        letter-spacing: 1px;
-      }
-
-      .invito {
-        padding: 40px 25px;
-        margin: 30px 20px;
-      }
+      .envelope { width: 320px; height: 224px; }
+      .envelope-flap { height: 112px; }
+      .wax-seal { width: 60px; height: 60px; top: 80px; }
+      .seal-logo { font-size: 24px; }
+      h1 { font-size: 38px; }
+      h2 { font-size: 22px; }
+      .data { font-size: 18px; letter-spacing: 1px; }
+      .invito { padding: 40px 25px; margin: 30px 20px; }
     }
 
-    /* =========================
-       RESPONSIVE - MOBILE
-       ========================= */
     @media (max-width: 480px) {
-      .envelope {
-        width: 280px;
-        height: 196px;
-      }
-
-      .envelope-flap {
-        height: 98px;
-      }
-
-      .wax-seal {
-        width: 50px;
-        height: 50px;
-        top: 63px;
-      }
-
-      .seal-logo {
-        font-size: 20px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-
-      .cuore {
-        font-size: 26px;
-      }
-
-      h2 {
-        font-size: 20px;
-      }
-
-      .data {
-        font-size: 17px;
-      }
-
-      .luogo {
-        font-size: 16px;
-      }
-
-      .nome-luogo {
-        font-size: 20px;
-      }
-
-      .rsvp button {
-        display: block;
-        width: 100%;
-        margin: 10px 0;
-      }
-
-      .form-allergie textarea {
-        width: 100%;
-      }
-
-      .popup {
-        width: 85%;
-        padding: 25px 20px;
-      }
-
-      .maps-button a {
-        width: 75%;
-        text-align: center;
-      }
+      .envelope { width: 280px; height: 196px; }
+      .envelope-flap { height: 98px; }
+      .wax-seal { width: 50px; height: 50px; top: 70px; }
+      .seal-logo { font-size: 20px; }
+      h1 { font-size: 32px; }
+      .cuore { font-size: 26px; }
+      h2 { font-size: 20px; }
+      .data { font-size: 17px; }
+      .luogo { font-size: 16px; }
+      .nome-luogo { font-size: 20px; }
+      .rsvp button { display: block; width: 100%; margin: 10px 0; }
+      .maps-button a { width: 75%; text-align: center; }
     }
-  </style>
+</style>
 </head>
 
 <body>
@@ -475,9 +430,7 @@
 
     <div class="cuore">♡</div>
 
-    <p>Vi invitiamo a condividere con noi
-        il momento più dolce e simbolico
-        del nostro grande giorno:</p>
+    <p>Siamo lieti di invitarvi al momento più dolce e simbolico del nostro Grande Giorno:</p>
 
     <div class="data">
       Mercoledì<br>
@@ -485,7 +438,7 @@
     </div>
 
     <h2>Ore 21:00</h2>
-    <h2>Taglio della torta</h2>
+    <h2>Taglio Torta</h2>
 
     <div class="luogo">
       <span class="nome-luogo">"Al Sole Resort"</span><br>
@@ -500,13 +453,9 @@
     </div>
 
     <div style="margin-top: 25px;">
-      <p>
-        Sarà un piacere condividere questo momento insieme.
-      </p>
-
       <p style="margin-top: 18px; font-size: 16px; letter-spacing: 1px;">
-        Vi chiediamo gentilmente di confermare la vostra presenza<br>
-        <strong>entro il 1° luglio 2026</strong>
+        È gradita conferma<br>
+        <strong>entro il 21 Giugno 2026</strong>
       </p>
     </div>
 
@@ -531,7 +480,7 @@
     </div>
 
     <p class="privacy">
-      I dati personali forniti saranno utilizzati esclusivamente
+      *I dati personali forniti saranno utilizzati esclusivamente
       per l'organizzazione dell'evento e non verranno condivisi con terzi.
     </p>
 
