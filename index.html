@@ -35,9 +35,7 @@
       z-index: -1;
     }
 
-    /* ================================
-    ANIMAZIONE BUSTA (PARTE CORRETTA)
-    ================================ */
+    /* ANIMAZIONE BUSTA */
     .envelope-container {
       perspective: 1200px;
       position: fixed;
@@ -222,9 +220,7 @@
       50% { transform: translateY(-10px); }
     }
 
-    /* ============================================================
-       STILE INVITO (INVARIATO)
-       ============================================================ */
+    /*STILE INVITO */
     .invito {
       max-width: 700px;
       margin: 40px auto;
@@ -374,9 +370,7 @@
       margin-right: auto;
     }
 
-    /* =========================
-       RESPONSIVE (INVARIATO)
-       ========================= */
+    /*RESPONSIVE  */
     @media (max-width: 768px) {
       .envelope { width: 320px; height: 224px; }
       .envelope-flap { height: 112px; }
@@ -422,7 +416,7 @@
     </div>
   </div>
 
-  <!-- INVITO (il tuo codice originale) -->
+  <!-- INVITO -->
   <div class="invito" id="invito">
     <p>Con grande gioia</p>
 
@@ -430,7 +424,7 @@
 
     <div class="cuore">♡</div>
 
-    <p>Siamo lieti di invitarvi al momento più dolce e simbolico del nostro Grande Giorno:</p>
+    <p>Sono lieti di invitarvi al momento più dolce e simbolico del loro Grande Giorno:</p>
 
     <div class="data">
       Mercoledì<br>
@@ -485,16 +479,13 @@
     </p>
 
     <div class="footer">
-      Vi aspettiamo per festeggiare insieme 💍
+      Vi aspettano per festeggiare insieme 💍
     </div>
   </div>
 
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwq28pmeiuKVvxgTHBp5fJGViyKAhCAJKCWT7xfPRgPvEykytvebkAFlW43OPIzFSMd/exec";
-
-    // ================================
     // ANIMAZIONE APERTURA BUSTA
-    // ================================
     const envelope = document.getElementById('envelope');
     const envelopeContainer = document.getElementById('envelopeContainer');
     const invito = document.getElementById('invito');
